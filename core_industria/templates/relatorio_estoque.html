@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatório de estoque | AutoPart Pro{% endblock %}
+
+{% block content %}
+<div class="page-toolbar d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <span class="eyebrow">Acompanhamento</span>
+        <h1 class="page-heading mt-1">Relatório de estoque baixo</h1>
+        <p class="page-subtitle">Peças com {{ limite_estoque_baixo }} unidades ou menos.</p>
+    </div>
+    <a href="{% url 'movimentacoes_estoque' %}" class="btn btn-industrial">Registrar movimentação</a>
+</div>
+
+<div class="report-callout mb-4">
+    <strong>{{ total_sem_estoque }} peça(s) sem estoque.</strong>
+    Revise os itens abaixo e registre entradas para manter o catálogo atualizado.
+</div>
+
+<div class="table-shell">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead><tr><th>Peça</th><th>SKU</th><th>Estoque</th><th>Categoria</th><th>Fabricante</th><th>Ações</th></tr></thead>
+            <tbody>
+                {% for peca in pecas %}
+                <tr>
+                    <td class="fw-semibold">{{ peca.nome }}</td>
+                    <td><span class="stock-badge">{{ peca.sku }}</span></td>
+                    <td><span class="movement-type {% if peca.quantidade_estoque == 0 %}movement-exit{% else %}movement-entry{% endif %}">{{ peca.quantidade_estoque }} un</span></td>
+                    <td>{{ peca.categoria.nome }}</td>
+                    <td>{{ peca.fabricante.nome_empresa }}</td>
+                    <td><a href="{% url 'detalhe_peca' peca.pk %}" class="btn btn-sm btn-outline-secondary">Detalhes</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center empty-state">Tudo certo: nenhuma peça com estoque baixo.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

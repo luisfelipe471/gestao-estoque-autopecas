@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Estoque de peças | AutoPart Pro{% endblock %}
+
+{% block content %}
+<div class="page-toolbar d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <span class="eyebrow">Catálogo</span>
+        <h1 class="page-heading mt-1">Estoque de peças</h1>
+        <p class="page-subtitle">{{ pecas|length }} {% if pecas|length == 1 %}peça cadastrada{% else %}peças cadastradas{% endif %}</p>
+    </div>
+    <a href="{% url 'cadastrar_peca' %}" class="btn btn-industrial">+ Nova peça</a>
+</div>
+<div class="table-shell">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>SKU</th>
+                <th>Estoque</th>
+                <th>Preço Venda</th>
+                <th>Categoria</th>
+                <th>Fabricante</th>
+                <th class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for peca in pecas %}
+            <tr>
+                <td class="fw-semibold"><a class="text-decoration-none text-reset" href="{% url 'detalhe_peca' peca.pk %}">{{ peca.nome }}</a></td>
+                <td><span class="stock-badge">{{ peca.sku }}</span></td>
+                <td>{{ peca.quantidade_estoque }} un</td>
+                <td class="price">R$ {{ peca.preco_venda }}</td>
+                <td>{{ peca.categoria.nome }}</td>
+                <td>{{ peca.fabricante.nome_empresa }}</td>
+                <td>
+                    <div class="table-actions">
+                        <a href="{% url 'detalhe_peca' peca.pk %}" class="btn btn-sm btn-outline-secondary">Detalhes</a>
+                        <a href="{% url 'editar_peca' peca.pk %}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="{% url 'excluir_peca' peca.pk %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center empty-state">Nenhuma peça cadastrada ainda. Use “Nova peça” para começar.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

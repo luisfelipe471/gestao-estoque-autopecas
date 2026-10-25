@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Excluir peça | AutoPart Pro{% endblock %}
+{% block content %}
+<section class="confirm-card mx-auto p-4 p-md-5" style="max-width: 620px;">
+    <span class="eyebrow">Ação permanente</span>
+    <h1 class="page-heading mt-2">Excluir peça</h1>
+    <p class="page-subtitle mb-4">Tem certeza de que deseja excluir <strong>{{ peca.nome }}</strong>? Esta ação não pode ser desfeita.</p>
+    <form method="post" class="d-flex flex-wrap gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sim, excluir peça</button>
+        <a href="{% url 'listar_pecas' %}" class="btn btn-secondary">Manter peça</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name="theme-color" content="#101a2b">
+    <title>{% block title %}AutoPart Pro | Gestão de autopeças{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #172033;
+            --muted: #697386;
+            --navy: #101a2b;
+            --navy-light: #1c2b43;
+            --accent: #f28c28;
+            --accent-dark: #d97112;
+            --surface: #ffffff;
+            --canvas: #f3f5f8;
+            --line: #e5e9ef;
+            --radius: 16px;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--canvas);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .navbar {
+            background: var(--navy);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 750;
+            letter-spacing: -.03em;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            place-items: center;
+            border-radius: 11px;
+            background: var(--accent);
+            color: var(--navy);
+            font-size: .85rem;
+            font-weight: 850;
+            letter-spacing: -.06em;
+        }
+
+        .navbar-nav { gap: .35rem; }
+        .navbar .nav-link {
+            padding: .55rem .9rem !important;
+            border-radius: 9px;
+            color: #c1cada;
+            font-size: .92rem;
+            font-weight: 550;
+            transition: color .2s ease, background .2s ease;
+        }
+        .navbar .nav-link:hover, .navbar .nav-link:focus {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        main { flex: 1; padding-top: 2.5rem; padding-bottom: 4rem; }
+
+        .eyebrow {
+            color: var(--accent-dark);
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, h4 { color: var(--ink); font-weight: 750; letter-spacing: -.035em; }
+        .page-heading { margin-bottom: .35rem; font-size: clamp(1.65rem, 3vw, 2.15rem); }
+        .page-subtitle { margin-bottom: 0; color: var(--muted); }
+
+        .btn {
+            border-radius: 10px;
+            font-weight: 650;
+            transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-industrial {
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--navy);
+        }
+        .btn-industrial:hover, .btn-industrial:focus {
+            border-color: var(--accent-dark);
+            background: var(--accent-dark);
+            color: #fff;
+            box-shadow: 0 7px 18px rgba(217, 113, 18, .2);
+        }
+        .btn-outline-light:hover { color: var(--navy); }
+        .btn-primary { border-color: var(--navy-light); background: var(--navy-light); }
+        .btn-primary:hover { border-color: var(--navy); background: var(--navy); }
+        .btn-danger { background: #c74747; }
+        .btn-success { border-color: var(--accent); background: var(--accent); color: var(--navy); }
+        .btn-success:hover { border-color: var(--accent-dark); background: var(--accent-dark); color: #fff; }
+        .btn-secondary { border-color: var(--line); background: #fff; color: var(--ink); }
+        .btn-secondary:hover { border-color: #cbd2dd; background: #f7f8fa; color: var(--ink); }
+
+        .surface-card, .form-card, .table-shell, .confirm-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: 0 10px 32px rgba(23, 32, 51, .045);
+        }
+        .table-shell { overflow: hidden; }
+        .table-responsive { margin: 0; }
+        .table { margin: 0; vertical-align: middle; }
+        .table thead th {
+            padding: 1rem 1.1rem;
+            border-bottom: 1px solid var(--line);
+            background: #f8f9fb;
+            color: #697386;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .table tbody td { padding: .95rem 1.1rem; border-color: #edf0f4; }
+        .table tbody tr:last-child td { border-bottom: 0; }
+        .table-hover tbody tr:hover { background: #fafbfc; }
+        .table .empty-state { padding: 3.25rem 1rem; color: var(--muted); }
+        .stock-badge {
+            display: inline-block;
+            padding: .35rem .65rem;
+            border-radius: 999px;
+            background: #eef2f7;
+            color: #34445c;
+            font-size: .8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .price { font-weight: 700; white-space: nowrap; }
+        .table-actions { display: flex; justify-content: center; gap: .4rem; }
+
+        .form-card { max-width: 680px; margin: 0 auto; overflow: hidden; }
+        .form-card-header { padding: 1.5rem 1.75rem; background: var(--navy); color: #fff; }
+        .form-card-header h1, .form-card-header h2 { margin: .35rem 0 0; color: #fff; font-size: 1.35rem; }
+        .form-card-body { padding: 1.75rem; }
+        form p { margin-bottom: 1.2rem; }
+        form p label {
+            display: block;
+            margin-bottom: .45rem;
+            color: #344054;
+            font-size: .9rem;
+            font-weight: 650;
+        }
+        form p input:not([type="checkbox"]):not([type="radio"]),
+        form p select, form p textarea {
+            display: block;
+            width: 100%;
+            min-height: 44px;
+            padding: .65rem .8rem;
+            border: 1px solid #d6dce5;
+            border-radius: 9px;
+            background: #fff;
+            color: var(--ink);
+        }
+        form p textarea { min-height: 110px; }
+        form p input:focus, form p select:focus, form p textarea:focus {
+            border-color: var(--accent);
+            outline: 0;
+            box-shadow: 0 0 0 .2rem rgba(242, 140, 40, .16);
+        }
+        .helptext { display: block; margin-top: .35rem; color: var(--muted); font-size: .8rem; }
+        .errorlist { margin: .4rem 0 0; padding-left: 1.2rem; color: #b42318; font-size: .85rem; }
+
+        .site-footer {
+            padding: 1.25rem 0;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: .82rem;
+        }
+
+        .metric-card {
+            height: 100%;
+            padding: 1.25rem;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: var(--surface);
+            box-shadow: 0 8px 24px rgba(23, 32, 51, .035);
+        }
+        .metric-label { color: var(--muted); font-size: .82rem; font-weight: 650; }
+        .metric-value { margin: .55rem 0 .2rem; color: var(--ink); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -.04em; }
+        .metric-hint { color: var(--muted); font-size: .78rem; }
+        .content-panel { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 10px 32px rgba(23, 32, 51, .045); }
+        .content-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--line); }
+        .content-panel-header h2 { margin: 0; font-size: 1.05rem; }
+        .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--line); }
+        .detail-item { padding: 1rem 1.1rem; background: #fff; }
+        .detail-item span { display: block; color: var(--muted); font-size: .76rem; font-weight: 650; }
+        .detail-item strong { display: block; margin-top: .35rem; font-size: .98rem; }
+        .movement-type { display: inline-block; padding: .3rem .6rem; border-radius: 999px; font-size: .75rem; font-weight: 750; }
+        .movement-entry { background: #e6f5ed; color: #237251; }
+        .movement-exit { background: #fdeaea; color: #aa3535; }
+        .report-callout { padding: 1rem 1.2rem; border: 1px solid #f2dfc3; border-radius: 12px; background: #fff8ef; color: #704b22; }
+
+        @media (max-width: 575.98px) {
+            main { padding-top: 1.75rem; }
+            .page-toolbar { align-items: flex-start !important; flex-direction: column; gap: 1rem; }
+            .page-toolbar .btn { width: 100%; }
+            .form-card-header, .form-card-body { padding: 1.25rem; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .content-panel-header { align-items: flex-start; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <span class="brand-mark" aria-hidden="true">AP</span>
+                <span>AutoPart <span class="fw-normal">Pro</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'painel' %}">Painel</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar_pecas' %}">Peças</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar_categorias' %}">Categorias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar_fabricantes' %}">Fabricantes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'relatorio_estoque' %}">Relatórios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'movimentacoes_estoque' %}">Movimentações</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>AutoPart Pro <span aria-hidden="true">&middot;</span> Gestão de estoque</span>
+            <span>Controle simples, operação eficiente.</span>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

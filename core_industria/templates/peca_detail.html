@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ peca.nome }} | AutoPart Pro{% endblock %}
+
+{% block content %}
+<div class="page-toolbar d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <span class="eyebrow">Ficha do produto</span>
+        <h1 class="page-heading mt-1">{{ peca.nome }}</h1>
+        <p class="page-subtitle">SKU {{ peca.sku }}</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'listar_pecas' %}" class="btn btn-secondary">Voltar ao estoque</a>
+        <a href="{% url 'editar_peca' peca.pk %}" class="btn btn-industrial">Editar peça</a>
+    </div>
+</div>
+
+<section class="content-panel mb-4">
+    <header class="content-panel-header"><h2>Informações da peça</h2></header>
+    <div class="p-3 p-md-4">
+        <div class="detail-grid">
+            <div class="detail-item"><span>SKU</span><strong>{{ peca.sku }}</strong></div>
+            <div class="detail-item"><span>Estoque atual</span><strong>{{ peca.quantidade_estoque }} unidades</strong></div>
+            <div class="detail-item"><span>Preço de custo</span><strong>R$ {{ peca.preco_custo|floatformat:2 }}</strong></div>
+            <div class="detail-item"><span>Preço de venda</span><strong>R$ {{ peca.preco_venda|floatformat:2 }}</strong></div>
+            <div class="detail-item"><span>Categoria</span><strong>{{ peca.categoria.nome }}</strong></div>
+            <div class="detail-item"><span>Fabricante</span><strong>{{ peca.fabricante.nome_empresa }}</strong></div>
+            <div class="detail-item"><span>Data de fabricação</span><strong>{{ peca.data_fabricacao|date:"d/m/Y" }}</strong></div>
+        </div>
+        <a href="{% url 'movimentacoes_estoque' %}" class="btn btn-outline-secondary mt-3">Registrar entrada ou saída</a>
+    </div>
+</section>
+
+<section class="content-panel">
+    <header class="content-panel-header">
+        <h2>Histórico de movimentações</h2>
+        <a href="{% url 'movimentacoes_estoque' %}" class="btn btn-sm btn-outline-secondary">Nova movimentação</a>
+    </header>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead><tr><th>Data</th><th>Tipo</th><th>Quantidade</th><th>Observação</th></tr></thead>
+            <tbody>
+                {% for movimentacao in movimentacoes %}
+                <tr>
+                    <td>{{ movimentacao.criada_em|date:"d/m/Y H:i" }}</td>
+                    <td><span class="movement-type {% if movimentacao.tipo == 'entrada' %}movement-entry{% else %}movement-exit{% endif %}">{{ movimentacao.get_tipo_display }}</span></td>
+                    <td>{{ movimentacao.quantidade }} un</td>
+                    <td>{{ movimentacao.observacao|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center empty-state">Esta peça ainda não tem movimentações registradas.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

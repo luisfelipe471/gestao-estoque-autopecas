@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar peça{% else %}Nova peça{% endif %} | AutoPart Pro{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <header class="form-card-header">
+        <span class="eyebrow">{% if form.instance.pk %}Atualização do catálogo{% else %}Adicionar ao catálogo{% endif %}</span>
+        <h1>{% if form.instance.pk %}Editar peça{% else %}Cadastrar peça{% endif %}</h1>
+    </header>
+    <div class="form-card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+                <a href="{% url 'listar_pecas' %}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-industrial">Salvar peça</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

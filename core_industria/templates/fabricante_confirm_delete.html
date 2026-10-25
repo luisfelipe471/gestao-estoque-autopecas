@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Excluir fabricante | AutoPart Pro{% endblock %}
+{% block content %}
+<section class="confirm-card mx-auto p-4 p-md-5" style="max-width: 620px;">
+    <span class="eyebrow">Ação permanente</span>
+    <h1 class="page-heading mt-2">Excluir fabricante</h1>
+    {% if pecas_vinculadas %}
+    <p class="alert alert-warning">Este fabricante está vinculado a {{ pecas_vinculadas }} peça(s) e não pode ser excluído. As peças serão preservadas.</p>
+    {% else %}
+    <p class="page-subtitle mb-4">Tem certeza de que deseja excluir <strong>{{ fabricante.nome_empresa }}</strong>? Esta ação não pode ser desfeita.</p>
+    {% endif %}
+    {% if exclusao_bloqueada %}
+    <p class="alert alert-danger">A exclusão foi bloqueada porque existem peças vinculadas.</p>
+    {% endif %}
+    <form method="post" class="d-flex flex-wrap gap-2">
+        {% csrf_token %}
+        {% if not pecas_vinculadas %}
+        <button type="submit" class="btn btn-danger">Sim, excluir fabricante</button>
+        {% endif %}
+        <a href="{% url 'listar_fabricantes' %}" class="btn btn-secondary">{% if pecas_vinculadas %}Voltar aos fabricantes{% else %}Manter fabricante{% endif %}</a>
+    </form>
+</section>
+{% endblock %}

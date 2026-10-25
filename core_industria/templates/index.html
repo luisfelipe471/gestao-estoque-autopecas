@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Início | AutoPart Pro{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+    <div class="home-copy">
+        <span class="eyebrow">Central de gestão automotiva</span>
+        <h1>Seu estoque em<br><span>movimento.</span></h1>
+        <p>Organize peças, categorias e fabricantes em um só lugar. Mais controle para manter sua operação sempre rodando.</p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <a href="{% url 'listar_pecas' %}" class="btn btn-industrial btn-lg">Acessar estoque <span aria-hidden="true">&rarr;</span></a>
+            <a href="{% url 'cadastrar_peca' %}" class="btn btn-outline-light btn-lg">Cadastrar peça</a>
+        </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-center"><span>AP</span><small>PEÇAS &amp; GESTÃO</small></div>
+        <span class="hero-chip chip-top">ESTOQUE</span>
+        <span class="hero-chip chip-bottom">EFICIÊNCIA</span>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+        <div>
+            <span class="eyebrow">Tudo organizado</span>
+            <h2 class="h3 mb-0 mt-1">Acesso rápido</h2>
+        </div>
+        <p class="page-subtitle">Escolha uma área para continuar.</p>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'listar_pecas' %}">
+                <span class="quick-icon icon-orange" aria-hidden="true">01</span>
+                <span class="quick-card-copy"><strong>Estoque de peças</strong><small>Consulte e mantenha seus itens atualizados.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'listar_categorias' %}">
+                <span class="quick-icon icon-blue" aria-hidden="true">02</span>
+                <span class="quick-card-copy"><strong>Categorias</strong><small>Deixe seu catálogo mais fácil de navegar.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'listar_fabricantes' %}">
+                <span class="quick-icon icon-green" aria-hidden="true">03</span>
+                <span class="quick-card-copy"><strong>Fabricantes</strong><small>Gerencie as marcas do seu catálogo.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'painel' %}">
+                <span class="quick-icon icon-blue" aria-hidden="true">04</span>
+                <span class="quick-card-copy"><strong>Painel de gestão</strong><small>Veja indicadores e movimentações recentes.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'relatorio_estoque' %}">
+                <span class="quick-icon icon-orange" aria-hidden="true">05</span>
+                <span class="quick-card-copy"><strong>Relatório de estoque</strong><small>Encontre itens com poucas unidades ou sem estoque.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="quick-card" href="{% url 'movimentacoes_estoque' %}">
+                <span class="quick-icon icon-green" aria-hidden="true">06</span>
+                <span class="quick-card-copy"><strong>Movimentações</strong><small>Registre entradas e saídas com histórico.</small></span>
+                <span class="quick-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .home-hero {
+        position: relative;
+        display: flex;
+        min-height: 390px;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: clamp(2rem, 6vw, 4.5rem);
+        border-radius: 22px;
+        background: radial-gradient(circle at 80% 50%, #263a58 0, #18273e 30%, var(--navy) 68%);
+        color: #fff;
+    }
+    .home-copy { position: relative; z-index: 1; max-width: 590px; }
+    .home-copy .eyebrow { color: #ffb35f; }
+    .home-copy h1 { margin: .8rem 0 1rem; color: #fff; font-size: clamp(2.5rem, 6vw, 4.6rem); line-height: .99; }
+    .home-copy h1 span { color: var(--accent); }
+    .home-copy p { max-width: 490px; margin: 0; color: #bdc7d6; font-size: 1.05rem; line-height: 1.7; }
+    .hero-visual { position: relative; width: 320px; height: 300px; flex: 0 0 320px; margin: 0 3% 0 1rem; }
+    .hero-orbit { position: absolute; inset: 50%; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; transform: translate(-50%, -50%); }
+    .orbit-one { width: 260px; height: 260px; }
+    .orbit-two { width: 195px; height: 195px; border-color: rgba(242,140,40,.4); }
+    .hero-center { position: absolute; top: 50%; left: 50%; display: flex; width: 130px; height: 130px; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.14); border-radius: 36px; background: linear-gradient(145deg, #243957, #17243a); box-shadow: 0 20px 60px rgba(0,0,0,.25); transform: translate(-50%, -50%) rotate(-8deg); }
+    .hero-center span { color: var(--accent); font-size: 3rem; font-weight: 850; letter-spacing: -.09em; line-height: 1; }
+    .hero-center small { margin-top: .65rem; color: #c5cfdd; font-size: .55rem; font-weight: 700; letter-spacing: .15em; }
+    .hero-chip { position: absolute; padding: .55rem .8rem; border: 1px solid rgba(255,255,255,.13); border-radius: 8px; background: rgba(255,255,255,.08); color: #e8edf5; font-size: .65rem; font-weight: 750; letter-spacing: .1em; }
+    .chip-top { top: 18px; right: 8px; }
+    .chip-bottom { bottom: 22px; left: 4px; color: #ffb35f; }
+    .home-section { margin-top: 3.25rem; }
+    .quick-card { display: flex; min-height: 125px; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .quick-card:hover { transform: translateY(-3px); border-color: #d4dbe5; box-shadow: 0 12px 28px rgba(23,32,51,.08); color: var(--ink); }
+    .quick-icon { display: grid; width: 45px; height: 45px; flex: 0 0 45px; place-items: center; border-radius: 13px; font-size: .75rem; font-weight: 850; }
+    .icon-orange { background: #fff0df; color: #bc640f; }
+    .icon-blue { background: #e8efff; color: #3659a4; }
+    .icon-green { background: #e5f5ee; color: #237251; }
+    .quick-card-copy { display: flex; flex: 1; flex-direction: column; gap: .3rem; }
+    .quick-card-copy strong { font-size: .98rem; }
+    .quick-card-copy small { color: var(--muted); font-size: .82rem; line-height: 1.45; }
+    .quick-arrow { color: #98a2b3; font-size: 1.3rem; }
+    @media (max-width: 767.98px) {
+        .home-hero { min-height: 0; }
+        .hero-visual { display: none; }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Excluir categoria | AutoPart Pro{% endblock %}
+{% block content %}
+<section class="confirm-card mx-auto p-4 p-md-5" style="max-width: 620px;">
+    <span class="eyebrow">Ação permanente</span>
+    <h1 class="page-heading mt-2">Excluir categoria</h1>
+    {% if pecas_vinculadas %}
+    <p class="alert alert-warning">Esta categoria está vinculada a {{ pecas_vinculadas }} peça(s) e não pode ser excluída. As peças serão preservadas.</p>
+    {% else %}
+    <p class="page-subtitle mb-4">Tem certeza de que deseja excluir <strong>{{ categoria.nome }}</strong>? Esta ação não pode ser desfeita.</p>
+    {% endif %}
+    {% if exclusao_bloqueada %}
+    <p class="alert alert-danger">A exclusão foi bloqueada porque existem peças vinculadas.</p>
+    {% endif %}
+    <form method="post" class="d-flex flex-wrap gap-2">
+        {% csrf_token %}
+        {% if not pecas_vinculadas %}
+        <button type="submit" class="btn btn-danger">Sim, excluir categoria</button>
+        {% endif %}
+        <a href="{% url 'listar_categorias' %}" class="btn btn-secondary">{% if pecas_vinculadas %}Voltar às categorias{% else %}Manter categoria{% endif %}</a>
+    </form>
+</section>
+{% endblock %}

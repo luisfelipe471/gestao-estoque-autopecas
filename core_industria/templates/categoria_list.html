@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Categorias | AutoPart Pro{% endblock %}
+
+{% block content %}
+<div class="page-toolbar d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <span class="eyebrow">Organização</span>
+        <h1 class="page-heading mt-1">Categorias</h1>
+        <p class="page-subtitle">{{ categorias|length }} {% if categorias|length == 1 %}categoria cadastrada{% else %}categorias cadastradas{% endif %}</p>
+    </div>
+    <a href="{% url 'cadastrar_categoria' %}" class="btn btn-industrial">+ Nova categoria</a>
+</div>
+
+<div class="table-shell">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr><th>Nome da categoria</th><th class="text-center">Ações</th></tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                <tr>
+                    <td class="fw-semibold">{{ categoria.nome }}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="{% url 'editar_categoria' categoria.pk %}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="{% url 'excluir_categoria' categoria.pk %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="2" class="text-center empty-state">Nenhuma categoria cadastrada ainda.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
